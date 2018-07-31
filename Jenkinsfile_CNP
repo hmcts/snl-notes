@@ -8,7 +8,7 @@ def component = "notes"
 withPipeline("java", product, component) {
   enableDbMigration()
   after('checkout') {
-    echo 'sln-notes checked out'
+    echo 'snl-notes checked out'
   }
 
   before('buildinfra:prod') {

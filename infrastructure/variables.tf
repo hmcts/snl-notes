@@ -5,7 +5,7 @@ variable "product" {
 }
 variable "component" {
   type        = "string"
-  default     = "events"
+  default     = "notes"
   description = "Scheduling and Listing "
 }
 variable "location" {

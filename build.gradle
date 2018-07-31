@@ -49,7 +49,7 @@ project.tasks['sonarqube'].dependsOn test
 sonarqube {
   properties {
     property "sonar.projectName", "Reform :: Scheduling & Listing :: snl-notes POC build extension"
-    property "sonar.projectKey", "snl-events"
+    property "sonar.projectKey", "snl-notes"
     property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integration.exec"
     property "sonar.dependencyCheck.reportPath", "${project.buildDir}/reports/dependency-check-report.xml"
@@ -178,15 +178,6 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 task functional(type: Test, description: 'Runs the functional tests.', group: 'Verification') {
   testClassesDirs = sourceSets.functional.output.classesDirs
   classpath = sourceSets.functional.runtimeClasspath
-}
-
-task integrationFakeRulesTests(type: Test, description: 'Runs the integration tests.', group: 'Verification') {
-  testClassesDirs = sourceSets.integrationSources.output.classesDirs
-  classpath = sourceSets.integrationSources.runtimeClasspath
-
-  useJUnit {
-    includeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.testcategories.IntegrationTestWithFakeRules'
-  }
 }
 
 task integrationTests(type: Test, description: 'Runs the integration tests.', group: 'Verification') {

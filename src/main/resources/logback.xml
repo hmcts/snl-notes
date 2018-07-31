@@ -16,7 +16,7 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
       <!-- daily rollover -->
-      <fileNamePattern>snl-events.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <fileNamePattern>snl-notes.%d{yyyy-MM-dd}.log</fileNamePattern>
 
     </rollingPolicy>
     <encoder>

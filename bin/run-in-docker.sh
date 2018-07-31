@@ -51,6 +51,10 @@ execute_script() {
 #  export S2S_URL=${S2S_URL}
 #  export S2S_SECRET=${S2S_SECRET}
 
+  echo "Building docker containers"
+
+  docker-compose build
+
   echo "Bringing up docker containers.."
 
   docker-compose up

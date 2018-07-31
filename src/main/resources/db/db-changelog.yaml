@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - changeSet:
+      id: initial-empty-changelog
+      author: r-kruk
+      changes:
+      - empty: {}

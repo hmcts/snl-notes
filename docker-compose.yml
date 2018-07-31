@@ -1,0 +1,55 @@
+version: '2.1'
+
+services:
+  snl-notes-db:
+    container_name: snl-notes-db
+    build: ./docker/snl-notes-db
+    networks:
+      - snl-notes-network
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=snluser
+      - POSTGRES_PASSWORD=snlpass
+      - POSTGRES_DB=snl
+  snl-wait-for-notes-db:
+    container_name: snl-wait-for-notes-db
+    build: ./docker/snl-wait-for-notes-db
+    depends_on:
+      - snl-notes-db
+    links:
+      - snl-notes-db
+    command: dockerize -wait tcp://snl-notes-db:5432 -timeout 30s
+    networks:
+      - snl-notes-network
+  snl-notes:
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: docker.artifactory.reform.hmcts.net/reform/snl-notes
+    container_name: snl-notes
+    depends_on:
+      - snl-wait-for-notes-db
+    environment:
+      # these environment variables are used by java-logging library
+      - ROOT_APPENDER
+      - JSON_CONSOLE_PRETTY_PRINT
+      - ROOT_LOGGING_LEVEL
+      - REFORM_SERVICE_NAME
+      - REFORM_TEAM
+      - REFORM_ENVIRONMENT
+      - SNL_NOTES_DB_HOST=snl-notes-db
+      - SNL_NOTES_DB_PORT=5432
+      - SNL_NOTES_DB_NAME=snl
+      - SNL_NOTES_DB_USERNAME=snluser
+      - SNL_NOTES_DB_PASSWORD=snlpass
+    ports:
+      - 8083:8093
+    networks:
+      - snl-notes-network
+networks:
+  snl-notes-network:
+    driver: bridge

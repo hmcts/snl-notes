@@ -171,7 +171,7 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
   classpath = sourceSets.functional.runtimeClasspath
 
   useJUnit {
-    includeCategories 'uk.gov.hmcts.reform.sandl.snlevents.functional.SmokeTest'
+    includeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.functional.SmokeTest'
   }
 }
 
@@ -185,7 +185,7 @@ task integrationFakeRulesTests(type: Test, description: 'Runs the integration te
   classpath = sourceSets.integrationSources.runtimeClasspath
 
   useJUnit {
-    includeCategories 'uk.gov.hmcts.reform.sandl.snlevents.testcategories.IntegrationTestWithFakeRules'
+    includeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.testcategories.IntegrationTestWithFakeRules'
   }
 }
 
@@ -194,7 +194,7 @@ task integrationTests(type: Test, description: 'Runs the integration tests.', gr
   classpath = sourceSets.integrationSources.runtimeClasspath
 
   useJUnit {
-    includeCategories 'uk.gov.hmcts.reform.sandl.snlevents.testcategories.IntegrationTest'
+    includeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.testcategories.IntegrationTest'
   }
 }
 

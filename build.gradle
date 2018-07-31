@@ -188,5 +188,3 @@ task integrationTests(type: Test, description: 'Runs the integration tests.', gr
     includeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.testcategories.IntegrationTest'
   }
 }
-
-test.finalizedBy integrationFakeRulesTests

@@ -25,7 +25,7 @@ spring:
       password: ${SNL_NOTES_DB_PASSWORD:snlpass}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
       dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
 #      properties:

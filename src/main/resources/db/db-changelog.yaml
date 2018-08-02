@@ -1,6 +1,3 @@
 databaseChangeLog:
-  - changeSet:
-      id: initial-empty-changelog
-      author: r-kruk
-      changes:
-      - empty: {}
+  - include:
+      file: db/schema/SL-1183-notes-framework.yaml

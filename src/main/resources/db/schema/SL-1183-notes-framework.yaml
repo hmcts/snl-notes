@@ -1,0 +1,99 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-notes-table
+      author: rkruk
+      changes:
+        - createTable:
+            tableName: note
+            columns:
+            - column:
+                constraints:
+                  primaryKey: true
+                name: id
+                type: UUID
+            - column:
+                name: content
+                type: text
+            - column:
+                name: entity_id
+                type: UUID
+            - column:
+                name: entity_type
+                type: varchar(255)
+            - column:
+                name: modified_by
+                type: varchar(255)
+            - column:
+                name: type
+                type: varchar(255)
+            - column:
+                name: updated_at
+                type: TIMESTAMP WITH TIME ZONE
+            - column:
+                name: created_at
+                type: TIMESTAMP WITH TIME ZONE
+
+  - changeSet:
+      id: add-hibernate-sequence
+      author: rkruk
+      comment: Without this sequence hibernate complains and application would not start.
+      failOnError: false
+      changes:
+        - createSequence:
+            schemaName: public
+            sequenceName: hibernate_sequence
+  - changeSet:
+      id: add-revinfo-table
+      author: rkruk
+      changes:
+        - createTable:
+            tableName: revinfo
+            columns:
+                - column:
+                    constraints:
+                      primaryKey: true
+                    name: rev
+                    type: int
+                - column:
+                    name: revtstmp
+                    type: bigint
+  - changeSet:
+      id: create-notes-aud-table
+      author: rkruk
+      changes:
+        - createTable:
+            tableName: note_aud
+            columns:
+            - column:
+                name: id
+                type: UUID
+            - column:
+                name: rev
+                type: int
+                constraints:
+                  foreignKeyName: fk_note_rev
+                  references: revinfo(rev)
+            - column:
+                name: revtype
+                type: smallint
+            - column:
+                name: content
+                type: text
+            - column:
+                name: entity_id
+                type: UUID
+            - column:
+                name: entity_type
+                type: varchar(255)
+            - column:
+                name: modified_by
+                type: varchar(255)
+            - column:
+                name: type
+                type: varchar(255)
+            - column:
+                name: updated_at
+                type: TIMESTAMP WITH TIME ZONE
+            - column:
+                name: created_at
+                type: TIMESTAMP WITH TIME ZONE

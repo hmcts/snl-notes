@@ -1,26 +1,27 @@
 {
 	"info": {
 		"name": "hmcts-snl-notes",
-		"_postman_id": "02ac9792-3012-7c92-23e9-366adf6ec9dc",
-		"description": "",
+		"_postman_id": "fa75a098-9d39-bde7-9c00-5a9570f0542c",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "get notes",
+			"name": "Get notes",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "get notes copy",
+			"name": "Put notes",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -43,8 +44,7 @@
 					"path": [
 						"notes"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}

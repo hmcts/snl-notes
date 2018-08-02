@@ -20,8 +20,7 @@ public class NotesController {
 
     @Autowired
     private NotesRepository notesRepository;
-
-
+    
     @GetMapping(path = "")
     public ResponseEntity<List<Note>> getAllNotes() {
         return ok(notesRepository.findAll());

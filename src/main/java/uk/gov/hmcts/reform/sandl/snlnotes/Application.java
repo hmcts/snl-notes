@@ -31,7 +31,6 @@ public class Application {
         config.addAllowedMethod("PUT");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/logout", config);
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

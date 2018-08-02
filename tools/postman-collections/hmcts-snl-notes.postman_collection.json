@@ -1,0 +1,52 @@
+{
+	"info": {
+		"name": "hmcts-snl-notes",
+		"_postman_id": "fa75a098-9d39-bde7-9c00-5a9570f0542c",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get notes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put notes",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[  \n   {  \n      \"id\":\"14e871ce-5f45-4ec7-86ca-35afd08e9866\",\n      \"content\":\"asd\",\n      \"type\":\"Special Requirements\",\n      \"parentId\":\"0793248c-b511-4f6b-8904-bc2dfb134b71\"\n   },\n   {  \n      \"id\":\"c93f00c6-bf48-4d24-9e13-c188400a10fe\",\n      \"content\":\"d\",\n      \"type\":\"Facility Requirements\",\n      \"parentId\":\"0793248c-b511-4f6b-8904-bc2dfb134b71\"\n   },\n   {  \n      \"id\":\"73e09461-fa11-4125-be20-38d7f5d703a3\",\n      \"content\":\"asd\",\n      \"type\":\"Other note\",\n      \"parentId\":\"0793248c-b511-4f6b-8904-bc2dfb134b71\"\n   }\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8093/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8093",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

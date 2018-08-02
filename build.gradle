@@ -104,6 +104,8 @@ dependencies {
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: versions.springBoot
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springBoot
 
+  compile group: 'org.hibernate', name: 'hibernate-envers', version: '5.2.11.Final'
+
   compile group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
   compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
   compile group: 'com.microsoft.azure', name: 'applicationinsights-logging-logback', version: '2.0.+'
@@ -178,6 +180,10 @@ task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verificatio
 task functional(type: Test, description: 'Runs the functional tests.', group: 'Verification') {
   testClassesDirs = sourceSets.functional.output.classesDirs
   classpath = sourceSets.functional.runtimeClasspath
+
+  useJUnit {
+    excludeCategories 'uk.gov.hmcts.reform.sandl.snlnotes.functional.SmokeTest'
+  }
 }
 
 task integrationTests(type: Test, description: 'Runs the integration tests.', group: 'Verification') {

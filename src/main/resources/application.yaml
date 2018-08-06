@@ -7,6 +7,9 @@ management:
     allowedOrigin: ${ALLOWED_FRONTEND_ORIGIN:*}
     allowedHeaders: ${ALLOWED_HEADERS:*}
 
+jwt:
+  secret: 'AlaMaKotaAKotMaAle'
+
 liquibase:
   enabled: ${ENABLE_DB_MIGRATE_IN_SERVICE:true}
   change-log: classpath:db/db-changelog.yaml

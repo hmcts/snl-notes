@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -72,6 +73,19 @@ public class JwtAuthenticationFilterTest {
         when(jwtTokenValidator.parseToken(INVALID_TOKEN)).thenThrow(JwtException.class);
 
         request.addHeader("Authorization", BEARER + INVALID_TOKEN);
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, chain);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        assertNull(auth);
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void doFilterInternal_withoutBearer_shouldNotAuthenticate() throws ServletException, IOException {
+        when(jwtTokenValidator.parseToken(any(String.class))).thenThrow(JwtException.class);
+
+        request.addHeader("Authorization", TOKEN_VALUE);
 
         jwtAuthenticationFilter.doFilterInternal(request, response, chain);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

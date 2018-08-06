@@ -14,7 +14,6 @@ public class JwtTokenValidator {
     @Value("${jwt.secret}")
     private String secret;
 
-
     public String parseToken(String token) {
         String username = null;
 
@@ -27,7 +26,7 @@ public class JwtTokenValidator {
             username = body.getSubject();
 
         } catch (JwtException e) {
-            log.error(e.getMessage());
+            log.error("Couldn't validate token. Message - {}" , e.getMessage());
         }
         return username;
     }

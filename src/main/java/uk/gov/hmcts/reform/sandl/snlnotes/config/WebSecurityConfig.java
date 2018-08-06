@@ -18,7 +18,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
@@ -44,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/**/*.html",
                     "/**/*.css",
                     "/**/*.js",
-                    "/health", "/login", "/security/signin")
+                    "/health")
                 .permitAll()
                 .and()
             .authorizeRequests()

@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.sandl.snlnotes.repositories.NotesRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -28,6 +29,7 @@ public class NotesControllerTest {
     private NotesRepository notesRepository;
 
     private static final List<Note> notes = Arrays.asList(new Note());
+    private static final UUID id = UUID.randomUUID();
 
     @Test
     public void getAllNotes_shouldReturnMockedNotes() {
@@ -41,6 +43,17 @@ public class NotesControllerTest {
         when(notesRepository.save(notes)).thenReturn(notes);
 
         val result = notesController.upsertMultipleNotes(notes);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(notes, result.getBody());
+    }
+
+    @Test
+    public void getNotesForEntities_shouldReturnNotes() {
+        List ids = (Arrays.asList(id));
+        when(notesRepository.findByEntityIdIn(ids)).thenReturn(notes);
+
+        val result = notesController.getNotesForEntities(ids);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(notes, result.getBody());

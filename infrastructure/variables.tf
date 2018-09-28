@@ -31,7 +31,7 @@ variable "jenkins_AAD_objectId" {
 }
 
 variable "external_host_name" {
-  default = "snl-notes.reform.hmcts.net"
+  default = ""
 }
 variable "subscription" {}
 

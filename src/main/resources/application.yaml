@@ -8,7 +8,7 @@ management:
     allowedHeaders: ${ALLOWED_HEADERS:*}
 
 jwt:
-  secret: 'AlaMaKotaAKotMaAle'
+  secret: ${SNL_FRONTEND_JWT_SECRET:"AlaMaKotaAKotMaAle"}
 
 liquibase:
   enabled: ${ENABLE_DB_MIGRATE_IN_SERVICE:true}

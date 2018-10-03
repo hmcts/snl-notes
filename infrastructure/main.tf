@@ -1,5 +1,12 @@
 locals {
   app_full_name = "${var.product}-${var.component}"
+  // Specifies the type of environment. var.env is replaced by pipline
+  // to i.e. pr-102-snl so then we need just aat used here
+  envInUse = "${(var.env == "preview" || var.env == "spreview") ? "aat" : var.env}"
+
+  // Shared Resources
+  vaultName = "${var.raw_product}-${local.envInUse}"
+  sharedResourceGroup = "${var.raw_product}-shared-${local.envInUse}"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -87,5 +94,22 @@ resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   name      = "${var.product}-${var.component}-POSTGRES-DATABASE"
   value     = "${module.postgres-snl-notes.postgresql_database}"
   vault_uri = "${module.snl-vault.key_vault_uri}"
+}
+# endregion
+
+# region shared Azure Key Vault
+data "azurerm_key_vault" "snl-shared-vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${local.sharedResourceGroup}"
+}
+
+data "azurerm_key_vault_secret" "s2s_jwt_secret" {
+  name      = "s2s-jwt-secret"
+  vault_uri = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
+}
+
+data "azurerm_key_vault_secret" "frontend_jwt_secret" {
+  name      = "frontend-jwt-secret"
+  vault_uri = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
 }
 # endregion

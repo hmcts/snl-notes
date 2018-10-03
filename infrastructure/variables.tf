@@ -3,6 +3,10 @@ variable "product" {
   default     = "snl"
   description = "Scheduling and Listing "
 }
+variable "raw_product" {
+  default     = "snl" // jenkins-library overrides product for PRs and adds e.g. pr-118-ccd
+}
+
 variable "component" {
   type        = "string"
   default     = "notes"

@@ -39,6 +39,9 @@ module "snl-notes" {
     SNL_NOTES_DB_PARAMS = "?ssl=true"
 
     ENABLE_DB_MIGRATE_IN_SERVICE = "false"
+
+    SNL_S2S_JWT_SECRET = "${data.azurerm_key_vault_secret.s2s_jwt_secret.value}"
+    SNL_FRONTEND_JWT_SECRET = "${data.azurerm_key_vault_secret.frontend_jwt_secret.value}"
   }
 
 }

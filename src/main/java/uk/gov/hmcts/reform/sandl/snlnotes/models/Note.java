@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlnotes.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,6 +34,7 @@ public class Note {
 
     @CreatedDate
     @Column(updatable = false)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private OffsetDateTime createdAt;
 
     @LastModifiedDate

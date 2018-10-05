@@ -1,1 +1,1 @@
-external_host_name = "notes-snl.demo.platform.hmcts.net"
+external_host_name = "snl-notes.demo.platform.hmcts.net"

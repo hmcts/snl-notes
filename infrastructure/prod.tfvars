@@ -1,0 +1,1 @@
+external_host_name = "notes-snl.platform.hmcts.net"

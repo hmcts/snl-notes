@@ -1,6 +1,6 @@
 locals {
   app_full_name = "${var.product}-${var.component}"
-  
+
   // Specifies the type of environment. var.env is replaced by pipline
   // to i.e. pr-102-snl so then we need just aat used here
   envInUse = "${(var.env == "preview" || var.env == "spreview") ? "aat" : var.env}"
@@ -29,6 +29,8 @@ module "snl-notes" {
   additional_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
   subscription         = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
+  asp_rg               = "${var.asp_rg}"
+  asp_name             = "${var.asp_name}"
   common_tags          = "${var.common_tags}"
 
   app_settings = {
@@ -67,7 +69,7 @@ module "snl-vault" {
   tenant_id = "${var.tenant_id}"
   object_id = "${var.jenkins_AAD_objectId}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  product_group_object_id = "70de400b-4f47-4f25-a4f0-45e1ee4e4ae3"
+  product_group_object_id = "${var.product_group_object_id}"
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {

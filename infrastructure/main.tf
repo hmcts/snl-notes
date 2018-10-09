@@ -1,5 +1,6 @@
 locals {
   app_full_name = "${var.product}-${var.component}"
+  
   // Specifies the type of environment. var.env is replaced by pipline
   // to i.e. pr-102-snl so then we need just aat used here
   envInUse = "${(var.env == "preview" || var.env == "spreview") ? "aat" : var.env}"

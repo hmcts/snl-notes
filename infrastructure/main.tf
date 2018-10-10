@@ -8,6 +8,8 @@ locals {
   // Shared Resources
   vaultName = "${var.raw_product}-${local.envInUse}"
   sharedResourceGroup = "${var.raw_product}-shared-${local.envInUse}"
+  asp_name = "${raw_product}-${local.envInUse}" //snl-aat, snl-preview
+  asp_rg = "${raw_product}-shared-${local.envInUse}" //snl-shared-aat, snl-shared-preview
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -29,8 +31,8 @@ module "snl-notes" {
   additional_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
   subscription         = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
-  asp_rg               = "${var.asp_rg}"
-  asp_name             = "${var.asp_name}"
+  asp_rg               = "${local.asp_rg}"
+  asp_name             = "${local.asp_name}"
   common_tags          = "${var.common_tags}"
 
   app_settings = {

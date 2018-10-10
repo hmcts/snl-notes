@@ -8,8 +8,8 @@ locals {
   // Shared Resources
   vaultName = "${var.raw_product}-${local.envInUse}"
   sharedResourceGroup = "${var.raw_product}-shared-${local.envInUse}"
-  asp_name = "${raw_product}-${local.envInUse}" //snl-aat, snl-preview
-  asp_rg = "${raw_product}-shared-${local.envInUse}" //snl-shared-aat, snl-shared-preview
+  asp_name = "${var.raw_product}-${local.envInUse}" //snl-aat, snl-preview
+  asp_rg = "${var.raw_product}-shared-${local.envInUse}" //snl-shared-aat, snl-shared-preview
 }
 
 resource "azurerm_resource_group" "rg" {

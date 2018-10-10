@@ -55,7 +55,7 @@ variable "asp_name" {
 
 variable "product_group_object_id" {
   default = "c9ab670f-8f92-4170-ba08-796ccab27751"
-  decription = "dcd_snl_kv"
+  description = "dcd_snl_kv"
 }
 
 variable "db_user" {

@@ -10,8 +10,8 @@ locals {
   sharedResourceGroup = "${var.raw_product}-shared-infrastructure-${local.envInUse}"
   sharedAspName = "${var.raw_product}-${local.envInUse}"
   sharedAspRg = "${var.raw_product}-shared-infrastructure-${local.envInUse}"
-  asp_name = "${(var.env == "preview" || var.env == "spreview") ? null : local.sharedAspName}"
-  asp_rg = "${(var.env == "preview" || var.env == "spreview") ? null : local.sharedAspRg}"
+  asp_name = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspName}"
+  asp_rg = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspRg}"
 }
 
 resource "azurerm_resource_group" "rg" {

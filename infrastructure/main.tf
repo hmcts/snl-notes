@@ -4,6 +4,7 @@ locals {
   // Specifies the type of environment. var.env is replaced by pipline
   // to i.e. pr-102-snl so then we need just aat used here
   envInUse = "${(var.env == "preview" || var.env == "spreview") ? "aat" : var.env}"
+  shortEnv = "${(var.env == "preview" || var.env == "spreview") ? var.deployment_namespace : var.env}"
 
   // Shared Resources
   vaultName = "${var.raw_product}-${local.envInUse}"
@@ -65,9 +66,9 @@ module "postgres-snl-notes" {
 }
 
 # region save DB details to Azure Key Vault
-module "snl-vault" {
+module "snl-vault-notes" {
   source = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name = "${var.deployment_namespace}${var.raw_product}-${var.component}-${var.env}"
+  name = "${var.raw_product}-${var.component}-${local.shortEnv}"
   product = "${var.product}-${var.component}"
   env = "${var.env}"
   tenant_id = "${var.tenant_id}"

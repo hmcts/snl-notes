@@ -6,7 +6,7 @@ output "microserviceName" {
 }
 
 output "vaultName" {
-  value = "${module.snl-vault.key_vault_name}"
+  value = "${module.snl-vault-notes.key_vault_name}"
 }
 
 output "sharedResourceGroup" {

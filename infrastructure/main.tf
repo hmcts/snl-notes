@@ -66,7 +66,7 @@ module "postgres-snl-notes" {
 }
 
 # region save DB details to Azure Key Vault
-module "snl-vault" {
+module "snl-vault-notes" {
   source = "git@github.com:hmcts/moj-module-key-vault?ref=master"
   name = "${var.raw_product}-${var.component}-${local.shortEnv}"
   product = "${var.product}-${var.component}"
@@ -80,31 +80,31 @@ module "snl-vault" {
 resource "azurerm_key_vault_secret" "POSTGRES-USER" {
   name      = "${var.product}-${var.component}-POSTGRES-USER"
   value     = "${module.postgres-snl-notes.user_name}"
-  vault_uri = "${module.snl-vault.key_vault_uri}"
+  vault_uri = "${module.snl-vault-notes.key_vault_uri}"
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
   name      = "${var.product}-${var.component}-POSTGRES-PASS"
   value     = "${module.postgres-snl-notes.postgresql_password}"
-  vault_uri = "${module.snl-vault.key_vault_uri}"
+  vault_uri = "${module.snl-vault-notes.key_vault_uri}"
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
   name      = "${var.product}-${var.component}-POSTGRES-HOST"
   value     = "${module.postgres-snl-notes.host_name}"
-  vault_uri = "${module.snl-vault.key_vault_uri}"
+  vault_uri = "${module.snl-vault-notes.key_vault_uri}"
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
   name      = "${var.product}-${var.component}-POSTGRES-PORT"
   value     = "${module.postgres-snl-notes.postgresql_listen_port}"
-  vault_uri = "${module.snl-vault.key_vault_uri}"
+  vault_uri = "${module.snl-vault-notes.key_vault_uri}"
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
   name      = "${var.product}-${var.component}-POSTGRES-DATABASE"
   value     = "${module.postgres-snl-notes.postgresql_database}"
-  vault_uri = "${module.snl-vault.key_vault_uri}"
+  vault_uri = "${module.snl-vault-notes.key_vault_uri}"
 }
 # endregion
 

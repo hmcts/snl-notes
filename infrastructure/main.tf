@@ -67,8 +67,8 @@ module "postgres-snl-notes" {
 # region save DB details to Azure Key Vault
 module "snl-vault" {
   source = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name = "snl-notes-${var.env}"
-  product = "${var.product}"
+  name = "${var.deployment_namespace}${var.raw_product}-${var.component}-${var.env}"
+  product = "${var.product}-${var.component}"
   env = "${var.env}"
   tenant_id = "${var.tenant_id}"
   object_id = "${var.jenkins_AAD_objectId}"

@@ -12,6 +12,12 @@ variable "component" {
   default     = "notes"
   description = "Scheduling and Listing "
 }
+
+variable "deployment_namespace" {
+  type        = "string"
+  default     = ""
+}
+
 variable "location" {
   type    = "string"
   default = "UK South"

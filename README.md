@@ -126,7 +126,7 @@ The application can be run locally using IntelliJ or by executing the following 
 
 ### Running in Docker
 
-Run the distribution (created in `build/install/snl-events` directory)
+Run the distribution (created in `build/install/snl-notes` directory)
 by executing the following command:
 
 ```bash

@@ -1,4 +1,5 @@
 # Scheduling and listing Notes
+[![Build Status](https://travis-ci.org/hmcts/snl-notes.svg?branch=master)](https://travis-ci.org/hmcts/snl-notes)
 
 ## Purpose
 

@@ -10,14 +10,19 @@ simply use this one as a starting point and build on top of it.
 ## What's inside
 
 The template is a working application with a minimal setup. It contains:
- * common plugins and libraries
+ * application skeleton
  * setup script to prepare project
- * building the application
- * running the application
+ * common plugins and libraries
+ * docker setup
+ * swagger configuration for api documentation ([see how to publish your api documentation to shared repository](https://github.com/hmcts/reform-api-docs#publish-swagger-docs))
+ * code quality tools already set up
+ * integration with Travis CI
+ * Hystrix circuit breaker enabled
+ * Hystrix dashboard
  * MIT license and contribution information
 
-The application exposes health endpoint (http://localhost:8092/health) and metrics endpoint
-(http://localhost:8092/metrics).
+The application exposes health endpoint (http://localhost:8093/health) and metrics endpoint
+(http://localhost:8093/metrics).
 
 ## Plugins
 
@@ -119,6 +124,29 @@ The application can be run locally using IntelliJ or by executing the following 
   ./gradlew bootRun
 ```
 
+### Running in Docker
+
+Run the distribution (created in `build/install/snl-events` directory)
+by executing the following command:
+
+```bash
+  docker-compose up
+```
+
+This will start the API container exposing the application's port
+(set to `8093` in this template app).
+
+In order to test if the application is up, you can call its health endpoint:
+
+```bash
+  curl http://localhost:8093/health
+```
+
+You should get a response similar to this:
+
+```
+  {"status":"UP","diskSpace":{"status":"UP","total":249644974080,"free":137188298752,"threshold":10485760}}
+
 ### Alternative script to run application in Docker
 
 To skip all the setting up and building, just execute the following command:
@@ -152,8 +180,40 @@ There is no need to remove postgres and java or similar core images.
 ## Testing
 
 ```bash
-  ./gradlew test
+./gradlew test
 ```
+
+## Hystrix
+
+[Hystrix](https://github.com/Netflix/Hystrix/wiki) is a library that helps you control the interactions
+between your application and other services by adding latency tolerance and fault tolerance logic. It does this
+by isolating points of access between the services, stopping cascading failures across them,
+and providing fallback options. We recommend you to use Hystrix in your application if it calls any services.
+
+### Hystrix circuit breaker
+
+This template API has [Hystrix Circuit Breaker](https://github.com/Netflix/Hystrix/wiki/How-it-Works#circuit-breaker)
+already enabled. It monitors and manages all the`@HystrixCommand` or `HystrixObservableCommand` annotated methods
+inside `@Component` or `@Service` annotated classes.
+
+### Hystrix dashboard
+
+When this API is running, you can monitor Hystrix metrics in real time using
+[Hystrix Dashboard](https://github.com/Netflix/Hystrix/wiki/Dashboard).
+In order to do this, visit http://localhost:8092/hystrix and provide http://localhost:8092/hystrix.stream
+as the Hystrix event stream URL. Keep in mind that you'll only see data once some
+of your Hystrix commands have been executed. Otherwise *'Loading...'* message will be displayed
+on the monitoring page.
+
+### Other
+
+Hystrix offers much more than Circuit Breaker pattern implementation or command monitoring.
+Here are some other functionalities it provides:
+ * [Separate, per-dependency thread pools](https://github.com/Netflix/Hystrix/wiki/How-it-Works#isolation)
+ * [Semaphores](https://github.com/Netflix/Hystrix/wiki/How-it-Works#semaphores), which you can use to limit
+ the number of concurrent calls to any given dependency
+ * [Request caching](https://github.com/Netflix/Hystrix/wiki/How-it-Works#request-caching), allowing
+ different code paths to execute Hystrix Commands without worrying about duplicating work
 
 ## License
 

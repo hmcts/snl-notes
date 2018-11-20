@@ -25,13 +25,16 @@ resource "azurerm_resource_group" "rg" {
 }
 
 module "snl-notes" {
-  source               = "git@github.com:hmcts/moj-module-webapp"
+  source               = "git@github.com:hmcts/cnp-module-webapp"
   product              = "${var.product}-${var.component}"
   location             = "${var.location}"
   env                  = "${var.env}"
   ilbIp                = "${var.ilbIp}"
   is_frontend          = "${var.external_host_name != "" ? "1" : "0"}"
+  https_only           = "true"
   additional_host_name = "${var.external_host_name != "" ? var.external_host_name : "null"}"
+  capacity             = "1"
+  instance_size        = "I1"
   subscription         = "${var.subscription}"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   asp_rg               = "${local.asp_rg}"
@@ -55,7 +58,7 @@ module "snl-notes" {
 }
 
 module "postgres-snl-notes" {
-  source              = "git@github.com:hmcts/moj-module-postgres?ref=master"
+  source              = "git@github.com:hmcts/cnp-module-postgres?ref=master"
   product             = "${var.product}-${var.component}"
   env                 = "${var.env}"
   location            = "${var.location}"
@@ -67,7 +70,7 @@ module "postgres-snl-notes" {
 
 # region save DB details to Azure Key Vault
 module "snl-vault-notes" {
-  source = "git@github.com:hmcts/moj-module-key-vault?ref=master"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = "${var.raw_product}-${var.component}-${local.shortEnv}"
   product = "${var.product}-${var.component}"
   env = "${var.env}"

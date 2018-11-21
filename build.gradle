@@ -178,6 +178,10 @@ configurations {
 configurations.all {
   resolutionStrategy {
     force group: 'org.hibernate', name: 'hibernate-core', version: versions.hibernate
+    force group: 'org.hibernate', name: 'hibernate-java8', version: versions.hibernate
+    force group: 'org.hibernate', name: 'hibernate-core', version: versions.hibernate
+    force group: 'org.hibernate', name: 'hibernate-entitymanager', version: versions.hibernate
+    force group: 'org.hibernate', name: 'hibernate-envers', version: versions.hibernate
   }
 }
 

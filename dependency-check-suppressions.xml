@@ -15,4 +15,9 @@
         <gav regex="true">^com\.google\.guava:guava:.*$</gav>
         <cve>CVE-2018-10237</cve>
     </suppress>
+    <suppress>
+        <notes>Used for testing only not in production</notes>
+        <gav regex="true">^com\.h2database:h2:.*$</gav>
+        <cpe>cpe:/a:h2database:h2</cpe>
+    </suppress>
 </suppressions>

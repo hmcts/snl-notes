@@ -175,6 +175,12 @@ configurations {
   integrationSourcesRuntime.extendsFrom testRuntime
 }
 
+configurations.all {
+  resolutionStrategy {
+    force group: 'org.hibernate', name: 'hibernate-core', version: versions.hibernate
+  }
+}
+
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
   testClassesDirs = sourceSets.functional.output.classesDirs
   classpath = sourceSets.functional.runtimeClasspath

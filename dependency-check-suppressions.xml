@@ -20,4 +20,9 @@
         <gav regex="true">^com\.h2database:h2:.*$</gav>
         <cpe>cpe:/a:h2database:h2</cpe>
     </suppress>
+    <suppress>
+        <notes>part of spring boot jpa, required migration to spring boot 2.0, covered by SL-2115</notes>
+        <gav regex="true">^dom4j:dom4j:.*$</gav>
+        <cve>CVE-2018-1000632</cve>
+    </suppress>
 </suppressions>

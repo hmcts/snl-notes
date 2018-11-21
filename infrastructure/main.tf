@@ -58,7 +58,7 @@ module "snl-notes" {
 }
 
 module "postgres-snl-notes" {
-  source              = "git@github.com:hmcts/cnp-module-postgres?ref=master"
+  source              = "git@github.com:hmcts/cnp-module-postgres?ref=vnetrulesv1.1"
   product             = "${var.product}-${var.component}"
   env                 = "${var.env}"
   location            = "${var.location}"

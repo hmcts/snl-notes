@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlnotes.models.Note;
 import uk.gov.hmcts.reform.sandl.snlnotes.repositories.NotesRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,12 +45,7 @@ public class NotesController {
 
         Map<UUID, List<Note>> notesMap = new HashMap<>();
 
-        entityIds.stream().forEach(entityId -> {
-            List<Note> entityNotes = noteList.stream().filter(n -> n.getEntityId().equals(entityId))
-                .collect(Collectors.toList());
-            notesMap.put(entityId, entityNotes);
-            noteList.removeAll(entityNotes);
-        });
+        noteList.stream().forEach(n -> notesMap.computeIfAbsent(n.getEntityId(), k -> new ArrayList<>()).add(n));
 
         return ok(notesMap);
     }

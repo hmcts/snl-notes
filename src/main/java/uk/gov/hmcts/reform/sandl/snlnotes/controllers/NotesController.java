@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlnotes.models.Note;
 import uk.gov.hmcts.reform.sandl.snlnotes.repositories.NotesRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -32,6 +35,22 @@ public class NotesController {
     @PostMapping(path = "/entities")
     public ResponseEntity<List<Note>> getNotesForEntities(@RequestBody List<UUID> ids) {
         return ok(notesRepository.findByEntityIdIn(ids));
+    }
+
+    @PostMapping(path = "/entities-dictionary")
+    public ResponseEntity<Map<UUID, List<Note>>> getMapOfNotesForEntities(@RequestBody List<UUID> entityIds) {
+        List<Note> noteList = notesRepository.findByEntityIdIn(entityIds);
+
+        Map<UUID, List<Note>> notesMap = new HashMap<>();
+
+        entityIds.stream().forEach(entityId -> {
+            List<Note> entityNotes = noteList.stream().filter(n -> n.getEntityId().equals(entityId))
+                .collect(Collectors.toList());
+            notesMap.put(entityId, entityNotes);
+            noteList.removeAll(entityNotes);
+        });
+
+        return ok(notesMap);
     }
 
     @PutMapping(path = "")

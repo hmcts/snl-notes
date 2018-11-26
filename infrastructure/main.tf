@@ -47,7 +47,7 @@ module "snl-notes" {
     SNL_NOTES_DB_NAME = "${module.postgres-snl-notes.postgresql_database}"
     SNL_NOTES_DB_USERNAME = "${module.postgres-snl-notes.user_name}"
     SNL_NOTES_DB_PASSWORD = "${module.postgres-snl-notes.postgresql_password}"
-    SNL_NOTES_DB_PARAMS = "?ssl=true"
+    SNL_NOTES_DB_PARAMS = "?sslmode=require"
 
     ENABLE_DB_MIGRATE_IN_SERVICE = "false"
 

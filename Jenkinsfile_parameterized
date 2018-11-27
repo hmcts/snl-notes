@@ -6,7 +6,7 @@ def type = "java"
 def product = "snl"
 def component = "notes"
 
-withPipeline("java", product, component) {
+withPipeline(type, product, component) {
     enableDbMigration()
     enableDockerBuild()
     enableDeployToAKS()

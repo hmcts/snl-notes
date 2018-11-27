@@ -23,12 +23,6 @@ services:
     networks:
       - snl-notes-network
   snl-notes:
-    build:
-      context: .
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
     image: docker.artifactory.reform.hmcts.net/reform/snl-notes
     container_name: snl-notes
     depends_on:

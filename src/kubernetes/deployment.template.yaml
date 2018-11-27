@@ -30,7 +30,7 @@ spec:
           - name: SNL_NOTES_DB_PARAMS
             value: "${SNL_NOTES_DB_PARAMS}"
           - name: ENABLE_DB_MIGRATE_IN_SERVICE
-            value: "${ENABLE_DB_MIGRATE_IN_SERVICE}"
+            value: "false"
           - name: SNL_S2S_JWT_SECRET
             value: "${SNL_S2S_JWT_SECRET}"
           - name: SNL_FRONTEND_JWT_SECRET

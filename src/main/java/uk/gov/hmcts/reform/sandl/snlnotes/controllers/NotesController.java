@@ -13,12 +13,10 @@ import uk.gov.hmcts.reform.sandl.snlnotes.models.Note;
 import uk.gov.hmcts.reform.sandl.snlnotes.repositories.NotesRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
 

@@ -18,17 +18,32 @@ spec:
         name: ${SERVICE_NAME}
         env:
           - name: SNL_NOTES_DB_HOST
-            value: "${SNL_NOTES_DB_HOST}"
+            valueFrom:
+              secretKeyRef:
+                name: ${SERVICE_NAME}-postgres-secret
+                key: host
           - name: SNL_NOTES_DB_PORT
-            value: "${SNL_NOTES_DB_PORT}"
+            valueFrom:
+              secretKeyRef:
+                name: ${SERVICE_NAME}-postgres-secret
+                key: port
           - name: SNL_NOTES_DB_NAME
-            value: "${SNL_NOTES_DB_NAME}"
+            valueFrom:
+              secretKeyRef:
+                name: ${SERVICE_NAME}-postgres-secret
+                key: database
           - name: SNL_NOTES_DB_USERNAME
-            value: "${SNL_NOTES_DB_USERNAME}"
+            valueFrom:
+              secretKeyRef:
+                name: ${SERVICE_NAME}-postgres-secret
+                key: username
           - name: SNL_NOTES_DB_PASSWORD
-            value: "${SNL_NOTES_DB_PASSWORD}"
+            valueFrom:
+              secretKeyRef:
+                name: ${SERVICE_NAME}-postgres-secret
+                key: password
           - name: SNL_NOTES_DB_PARAMS
-            value: "${SNL_NOTES_DB_PARAMS}"
+            value: "?sslmode=require"
           - name: ENABLE_DB_MIGRATE_IN_SERVICE
             value: "false"
           - name: SNL_S2S_JWT_SECRET
@@ -88,3 +103,46 @@ spec:
         backend:
           serviceName: ${SERVICE_NAME}
           servicePort: 80
+---
+#
+# Service Catalog Database Instance
+#
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: ${SERVICE_NAME}-postgres-instance
+  namespace: ${NAMESPACE}
+spec:
+  #
+  # Get the value of this from 'svcat get classes'
+  #
+  clusterServiceClassExternalName: azure-postgresql-9-6-database
+
+  #
+  # The 'SKU'. Get the value of this from 'svc describe class <class name>'
+  #
+  clusterServicePlanExternalName: database
+
+  #
+  # Parameters.  Get these from here: https://github.com/Azure/open-service-broker-azure/blob/master/docs/modules/postgresql.md
+  # or 'svcat describe <class>/<plan>'
+  # e.g. 'svcat describe plan azure-postgresql-9-6-database/database'
+  #
+  parameters:
+    parentAlias: cnp-osba-postgres-server
+---
+#
+# The binding.  This will return the secret with connection details, etc.
+#
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: ${SERVICE_NAME}-postgres-binding
+  namespace: ${NAMESPACE}
+spec:
+  instanceRef:
+    name: ${SERVICE_NAME}-postgres-instance
+  #
+  # This is the secret used above in your pod environment config
+  #
+  secretName: ${SERVICE_NAME}-postgres-secret

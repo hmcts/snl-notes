@@ -18,4 +18,4 @@ HEALTHCHECK --interval=10s --timeout=10s --retries=10 CMD http_proxy="" curl --s
 
 EXPOSE 8093
 
-ENTRYPOINT ["/opt/app/bin/snl-notes"]
+#ENTRYPOINT ["/opt/app/bin/snl-notes"]

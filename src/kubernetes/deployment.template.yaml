@@ -18,32 +18,17 @@ spec:
         name: ${SERVICE_NAME}
         env:
           - name: SNL_NOTES_DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-postgres-secret
-                key: host
+            value: "localhost"
           - name: SNL_NOTES_DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-postgres-secret
-                key: port
+            value: "5432"
           - name: SNL_NOTES_DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-postgres-secret
-                key: database
+            value: "snl-notes"
           - name: SNL_NOTES_DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-postgres-secret
-                key: username
+            value: "snluser"
           - name: SNL_NOTES_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-postgres-secret
-                key: password
+            value: "snlpass"
           - name: SNL_NOTES_DB_PARAMS
-            value: "?sslmode=require"
+            value: "?sslmode=disable"
           - name: ENABLE_DB_MIGRATE_IN_SERVICE
             value: "false"
           - name: SNL_S2S_JWT_SECRET
@@ -63,6 +48,29 @@ spec:
         ports:
           - containerPort: 8093
             name: http
+        imagePullPolicy: Always
+      #
+      # Postgres Container
+      #
+      - image: postgres:10-alpine
+        name: ${SERVICE_NAME}-postgres
+        env:
+          - name: POSTGRES_DB
+            value: snl-notes
+          - name: POSTGRES_USER
+            value: snluser
+          - name: POSTGRES_PASSWORD
+            value: snlpass
+        envFrom:
+          - configMapRef:
+              name: ${SERVICE_NAME}-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         imagePullPolicy: Always
 ---
 #
@@ -103,46 +111,3 @@ spec:
         backend:
           serviceName: ${SERVICE_NAME}
           servicePort: 80
----
-#
-# Service Catalog Database Instance
-#
-apiVersion: servicecatalog.k8s.io/v1beta1
-kind: ServiceInstance
-metadata:
-  name: ${SERVICE_NAME}-postgres-instance
-  namespace: ${NAMESPACE}
-spec:
-  #
-  # Get the value of this from 'svcat get classes'
-  #
-  clusterServiceClassExternalName: azure-postgresql-9-6-database
-
-  #
-  # The 'SKU'. Get the value of this from 'svc describe class <class name>'
-  #
-  clusterServicePlanExternalName: database
-
-  #
-  # Parameters.  Get these from here: https://github.com/Azure/open-service-broker-azure/blob/master/docs/modules/postgresql.md
-  # or 'svcat describe <class>/<plan>'
-  # e.g. 'svcat describe plan azure-postgresql-9-6-database/database'
-  #
-  parameters:
-    parentAlias: cnp-osba-postgres-server
----
-#
-# The binding.  This will return the secret with connection details, etc.
-#
-apiVersion: servicecatalog.k8s.io/v1beta1
-kind: ServiceBinding
-metadata:
-  name: ${SERVICE_NAME}-postgres-binding
-  namespace: ${NAMESPACE}
-spec:
-  instanceRef:
-    name: ${SERVICE_NAME}-postgres-instance
-  #
-  # This is the secret used above in your pod environment config
-  #
-  secretName: ${SERVICE_NAME}-postgres-secret

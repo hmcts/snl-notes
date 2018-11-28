@@ -21,7 +21,7 @@ azure:
 #If you use a database then uncomment below lines and update db properties accordingly leaving tomcat connection settings unchanged.
 spring:
   application:
-    name: Scheduling and Listng Notes Framework
+    name: snl-notes
   datasource:
       url: jdbc:postgresql://${SNL_NOTES_DB_HOST:localhost}:${SNL_NOTES_DB_PORT:5433}/${SNL_NOTES_DB_NAME:snl}${SNL_NOTES_DB_PARAMS:?}
       username: ${SNL_NOTES_DB_USERNAME:snluser}

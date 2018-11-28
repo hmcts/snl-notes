@@ -148,4 +148,3 @@ Task to determine which dependencies have updates. Usage:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-

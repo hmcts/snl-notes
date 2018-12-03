@@ -12,16 +12,6 @@ services:
       - POSTGRES_USER=snluser
       - POSTGRES_PASSWORD=snlpass
       - POSTGRES_DB=snl
-  snl-wait-for-notes-db:
-    container_name: snl-wait-for-notes-db
-    build: ./docker/snl-wait-for-notes-db
-    depends_on:
-      - snl-notes-db
-    links:
-      - snl-notes-db
-    command: dockerize -wait tcp://snl-notes-db:5432 -timeout 30s
-    networks:
-      - snl-notes-network
   snl-notes:
     build:
       context: .
@@ -32,7 +22,7 @@ services:
     image: docker.artifactory.reform.hmcts.net/reform/snl-notes
     container_name: snl-notes
     depends_on:
-      - snl-wait-for-notes-db
+      - snl-notes-db
     environment:
       # these environment variables are used by java-logging library
       - ROOT_APPENDER
@@ -47,7 +37,7 @@ services:
       - SNL_NOTES_DB_USERNAME=snluser
       - SNL_NOTES_DB_PASSWORD=snlpass
     ports:
-      - 8083:8093
+      - 8093:8093
     networks:
       - snl-notes-network
 networks:

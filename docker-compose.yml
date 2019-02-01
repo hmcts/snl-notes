@@ -5,7 +5,7 @@ services:
     container_name: snl-notes-db
     build: ./docker/snl-notes-db
     networks:
-      - snl-notes-network
+      - snl-network
     ports:
       - "5433:5432"
     environment:
@@ -31,15 +31,17 @@ services:
       - REFORM_SERVICE_NAME
       - REFORM_TEAM
       - REFORM_ENVIRONMENT
-      - SNL_NOTES_DB_HOST=snl-notes-db
-      - SNL_NOTES_DB_PORT=5432
+      - SNL_NOTES_DB_HOST=host.docker.internal
+      - SNL_NOTES_DB_PORT=5433
       - SNL_NOTES_DB_NAME=snl
       - SNL_NOTES_DB_USERNAME=snluser
       - SNL_NOTES_DB_PASSWORD=snlpass
     ports:
       - 8093:8093
     networks:
-      - snl-notes-network
+      - snl-network
 networks:
-  snl-notes-network:
+  snl-network:
     driver: bridge
+    name: snl-network
+
